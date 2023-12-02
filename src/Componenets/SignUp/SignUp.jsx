@@ -2,9 +2,12 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
-import { Grid} from '@mui/material';
+import { Grid } from '@mui/material';
 import Input from '../Input/Input';
 import Button from '../Ui/Button';
+import { GoogleLogin } from '@react-oauth/google';
+import { useLinkedIn } from 'react-linkedin-login-oauth2';
+import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 
 
 
@@ -28,7 +31,7 @@ export default function SignUp() {
 
     // console.log("formState", errors);
 
-
+    //for google sign in
     const onSubmit = (data) => {
 
         console.log(data);
@@ -36,6 +39,29 @@ export default function SignUp() {
         localStorage.setItem("data", JSON.stringify(data));
 
     };
+
+    const responseMessage = (response) => {
+        console.log(response);
+    };
+
+    const errorMessage = (error) => {
+        console.log(error);
+    };
+
+    //for linked in
+    const { linkedInLogin } = useLinkedIn({
+        clientId: '86vhj2q7ukf83q',
+        redirectUri: `${window.location.origin}/linkedin`, // for Next.js, you can use `${typeof window === 'object' && window.location.origin}/linkedin`
+        onSuccess: (code) => {
+            console.log(code);
+        },
+        onError: (error) => {
+            console.log(error);
+        },
+    });
+
+
+
 
 
     return (
@@ -50,7 +76,7 @@ export default function SignUp() {
 
                     <form action="" style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
 
-                        <Grid container sx={{ justifyContent: 'center' }}>
+                        <Grid container sx={{ justifyContent: 'center', bgcolor: '' }}>
 
 
                             <Input
@@ -94,13 +120,37 @@ export default function SignUp() {
                                 <Button type='submit'> Signup </Button>
                             </Grid>
 
+                            <Grid container sx={{ justifyContent: 'center', my: { xs: 1, sm: 1, md: 2, lg: 2 } }}>
+
+                                <GoogleLogin
+                                    onSuccess={responseMessage}
+                                    onError={errorMessage}
+                                />
+
+
+                            </Grid>
+
+                            <Grid sx={{
+                                justifyContent: 'center', my: { xs: 1, sm: 1, md: 1, lg: 1 }
+                            }}>
+                                <img
+                                    onClick={linkedInLogin}
+                                    src={linkedin}
+                                    alt="Sign in with Linked In"
+                                    style={{ maxWidth: '180px', cursor: 'pointer' }}
+                                />
+                            </Grid>
+
+
+
                         </Grid>
+
                     </form>
                 </Grid>
 
-            </Grid>
+            </Grid >
 
-        </Grid>
+        </Grid >
 
     )
 }

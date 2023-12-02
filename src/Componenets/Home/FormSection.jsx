@@ -1,9 +1,13 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import { H1, H6 } from '../Ui/Typography'
-import SignUp from '../SignUp/SignUp'
+import SignUp from '../SignUp/SignUp';
+
 
 export default function FormSection() {
+
+    
+
     return (
         <Grid container md={6} lg={7} sx={{ bgcolor: " ", justifyContent: 'center' }}>
 
@@ -16,11 +20,13 @@ export default function FormSection() {
                 <Grid>
 
                     <H1>Student Signup</H1>
-                    
+
                     <H6>Hey enter your details to create your account</H6>
 
                     <Grid container sx={{ mt: 1 }}>
+
                         <SignUp />
+
                     </Grid>
 
                 </Grid>
